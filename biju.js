@@ -5,11 +5,17 @@ require('./date.js');
   function Biju () {
     var
         args = process.argv.slice(2)
-      , method = args[0]
-      , task = args[1]
-      , date = args[2];
+      , method = args[0];
 
-      callMethod(method);
+    callMethod(method);
+
+    function  showOptions () {
+      console.log(
+        "==================================\n",
+        "add('task name', '03/06/2014') \n",
+        "remove('task name')"
+      )
+    }
 
 
     function callMethod (method) {
@@ -19,18 +25,20 @@ require('./date.js');
         showOptions();
       }
     }
-
-
-    function  showOptions () {
-      console.log(
-        "==================================\n",
-        "add('task name', '03/06/2014') \n",
-        "remove('task name')"
-      )
-    }
   };
 
   Biju.add = function (info) {
+    var
+        args = process.argv.slice(2)
+      , method = args[0]
+      , task = args[1]
+      , date = args[2];
+
+    if (!date) {
+      var date = new Date().format();
+    };
+
+    console.log(args);
   };
 
 
@@ -38,8 +46,5 @@ require('./date.js');
   };
 
   Biju.remove = function  ()  {
-
-  }
-
-  Biju();
+  };
 })();
