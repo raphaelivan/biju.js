@@ -7,7 +7,7 @@ require('./date.js');
 
   /* create Biju Object */
   var Biju = {
-    file: 'list.txt'
+    file: '.list.txt'
   };
 
   /* Define the initializer method */
@@ -15,11 +15,6 @@ require('./date.js');
     var
         args = process.argv.slice(2)
       , method = args[0];
-
-    if (!file) {
-      Biju.file = 'list.txt';
-
-    };
 
     callMethod(method);
   }
@@ -29,7 +24,8 @@ require('./date.js');
     console.log(
       "==================================\n",
       "add('task name', '03/06/2014') \n",
-      "remove('task name')"
+      "remove('task name')\n",
+      'list'
     )
   }
 
@@ -45,35 +41,60 @@ require('./date.js');
     var
         args = process.argv.slice(2)
       , note = args[1]
-      , date = args[2]
-      , file = Biju.file;
+      , date = args[2] ? args[2] : new Date().format()
+      , file = Biju.file
+      , buffer = new Buffer(note + ':' + date + ';')
 
-    if (!date) {
-      var date = new Date().format();
-    };
+    fs.appendFile(file, buffer, function (err) {
+      if (err) {
+        throw 'error writing file:' + err;
+      };
 
-    fs.writeFile(
-        file
-      , (note + ':' + date + '\n')
-      , function (err) {
-        if (err) {
-          return console.log('OOPS!')
-        };
-
-        console.log('Note saved!')
-      }
-    )
+      console.log('Note saved!')
+    });
   };
 
 
   Biju.list = function () {
     var
-      file = Biju.file;
+        file = Biju.file
+      , output = {};
 
-    fs.readFile(file, function(err, buffer){
-      var data = buffer.toString();
+    fs.readFile(file, function (err, buffer){
+      var
+          data = buffer.toString()
+        , lines = data.split(';');
 
-      console.log(data);
+        lines.forEach(function (e) {
+          var
+              split = e.split(':')
+            , date = split[1]
+            , note = split[0];
+
+          if (output[date]) {
+            output[date].push(note);
+          } else {
+            output[date] = [];
+            output[date].push(note);
+          }
+        });
+
+
+      for (var k in output) {
+        if (k === new Date().format()) {
+          console.log('------- Today -------');
+        } else {
+          if (k !== 'undefined') {
+            console.log('-------', k, '-------');
+          };
+        }
+
+        output[k].forEach(function (e) {
+          if (e) {
+            console.log("-> ", e);
+          };
+        });
+      };
     })
   };
 
