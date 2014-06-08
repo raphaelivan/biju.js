@@ -7,14 +7,18 @@ require('./date.js');
 
   /* create Biju Object */
   var Biju = {
-    file: '.biju.txt'
+    file: process.env.BIJU_FILE
   };
 
   /* Define the initializer method */
-  Biju.init = function (file) {
+  Biju.init = function () {
     var
         args = process.argv.slice(2)
       , method = args[0];
+
+    if (!Biju.file) {
+      return console.log('You need to set BIJU_FILE environment variable. e.g (export BIJU_FILE="~/.biju.txt"');
+    };
 
     callMethod(method);
   }
@@ -36,6 +40,7 @@ require('./date.js');
       showOptions();
     }
   }
+
 
   Biju.add = function () {
     var
