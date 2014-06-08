@@ -50,7 +50,7 @@ require('./date.js');
         throw 'error writing file:' + err;
       };
 
-      console.log('Note saved!')
+      console.log('Note saved!');
     });
   };
 
@@ -58,7 +58,8 @@ require('./date.js');
   Biju.list = function () {
     var
         file = Biju.file
-      , output = {};
+      , output = {}
+      , day = process.argv.slice(2)[1];
 
     fs.readFile(file, function (err, buffer){
       var
@@ -79,7 +80,37 @@ require('./date.js');
           }
         });
 
+        if (day) {
+          displayDayList(day);
+        } else {
+          displayCompleteList();
+        }
+    });
 
+
+    function displayDayList (day) {
+      switch (day) {
+        case 'today':
+          day = new Date().format();
+          break;
+        case 'tomorrow':
+          day = new Date( new Date().getTime() + 24 * 60 *60 *1000 ).format();
+          break;
+      }
+
+
+      for (var k in output) {
+        if (k === day) {
+          output[k].forEach(function (e) {
+            if (e) {
+              console.log("-> ", e);
+            };
+          });
+        }
+      };
+    };
+
+    function displayCompleteList () {
       for (var k in output) {
         if (k === new Date().format()) {
           console.log('------- Today -------');
@@ -95,10 +126,11 @@ require('./date.js');
           };
         });
       };
-    })
+    }
   };
 
-  Biju.remove = function  ()  {
+  Biju.remove = function () {
+
   };
 
   delete Biju.init();
