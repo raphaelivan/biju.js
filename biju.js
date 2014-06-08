@@ -7,7 +7,7 @@ require('./date.js');
 
   /* create Biju Object */
   var Biju = {
-    file: '.list.txt'
+    file: '.biju.txt'
   };
 
   /* Define the initializer method */
