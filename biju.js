@@ -135,7 +135,31 @@ require('./date.js');
   };
 
   Biju.remove = function () {
+    var
+        file = Biju.file
+      , n = process.argv.slice(2)[1];
 
+    fs.readFile(file, function (err, buffer){
+      var
+          data = buffer.toString()
+        , lines = data.split(';');
+
+        lines.forEach(function (e) {
+          var
+              split = e.split(':')
+            , date = split[1]
+            , note = split[0]
+            , re = new RegExp(n,"i")
+            , output;
+
+          if (note.match(re)) {
+            output = data.replace(e + ';','');
+          };
+
+          fs.writeFile(file, output, 'utf-8', function (err) {
+          });
+        });
+    });
   };
 
   delete Biju.init();
