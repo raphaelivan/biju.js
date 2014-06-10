@@ -94,12 +94,17 @@ require('./date.js');
 
 
     function displayDayList (day) {
+      var interval = 24 * 60 * 60 * 1000;
+
       switch (day) {
+        case 'yesterday':
+          day = new Date( new Date().getTime() - interval).format();
+          break;
         case 'today':
           day = new Date().format();
           break;
         case 'tomorrow':
-          day = new Date( new Date().getTime() + 24 * 60 *60 *1000 ).format();
+          day = new Date( new Date().getTime() + interval).format();
           break;
       }
 
