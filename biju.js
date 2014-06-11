@@ -139,6 +139,23 @@ require('./date.js');
     }
   };
 
+  Biju.clear = function () {
+    var
+        file = Biju.file
+      , stdin;
+    console.log('Are you sure?(y | n)');
+    stdin = process.openStdin();
+    stdin.addListener('data', function(d) {
+      var answer = d.toString().substring(0, d.length-1);
+      if (answer == 'y') {
+        fs.writeFile(file, '', 'utf-8', function (err) {});
+        console.log('Clean!');
+      }
+      process.exit(0);
+    });
+  }
+
+
   Biju.remove = function () {
     var
         file = Biju.file
