@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 require('./date.js');
+
 ;(function(){
   'use strict'
 
@@ -26,10 +27,11 @@ require('./date.js');
 
   function  showOptions () {
     console.log(
-      "==================================\n",
-      "add('task name', '03/06/2014') \n",
-      "remove('task name')\n",
-      'list'
+      "============== Task not found ====================\n",
+      "biju add 'task name' '2014-06-03'\n",
+      "biju remove 'task name'\n",
+      "biju list <yesterday | today | tomorrow>\n",
+      'biju clear'
     )
   }
 
