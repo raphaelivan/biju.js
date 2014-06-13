@@ -24,26 +24,6 @@ require('./date.js');
     callMethod(method);
   }
 
-
-  function  showOptions () {
-    console.log(
-      "============== Task not found ====================\n",
-      "biju add 'task name' '2014-06-03'\n",
-      "biju remove 'task name'\n",
-      "biju list <yesterday | today | tomorrow>\n",
-      'biju clear'
-    )
-  }
-
-  function callMethod (method) {
-    if (Biju.hasOwnProperty(method)) {
-      Biju[method].call();
-    } else {
-      showOptions();
-    }
-  }
-
-
   Biju.add = function () {
     var
         args = process.argv.slice(2)
@@ -88,57 +68,11 @@ require('./date.js');
         });
 
         if (day) {
-          displayDayList(day);
+          displayDayList(output, day);
         } else {
-          displayCompleteList();
+          displayCompleteList(output);
         }
     });
-
-
-    function displayDayList (day) {
-      var interval = 24 * 60 * 60 * 1000;
-
-      switch (day) {
-        case 'yesterday':
-          day = new Date( new Date().getTime() - interval).format();
-          break;
-        case 'today':
-          day = new Date().format();
-          break;
-        case 'tomorrow':
-          day = new Date( new Date().getTime() + interval).format();
-          break;
-      }
-
-
-      for (var k in output) {
-        if (k === day) {
-          output[k].forEach(function (e) {
-            if (e) {
-              console.log("-> ", e);
-            };
-          });
-        }
-      };
-    };
-
-    function displayCompleteList () {
-      for (var k in output) {
-        if (k === new Date().format()) {
-          console.log('------- Today -------');
-        } else {
-          if (k !== 'undefined') {
-            console.log('-------', k, '-------');
-          };
-        }
-
-        output[k].forEach(function (e) {
-          if (e) {
-            console.log("-> ", e);
-          };
-        });
-      };
-    }
   };
 
   Biju.clear = function () {
@@ -174,7 +108,7 @@ require('./date.js');
             , date = split[1]
             , note = split[0]
             , re = new RegExp(n,"i")
-            , output;
+            , output = '';
 
           if (note.match(re)) {
             output = data.replace(e + ';','');
@@ -185,6 +119,73 @@ require('./date.js');
         });
     });
   };
+
+
+  // Display information about a specifc day
+  function displayDayList (output, day) {
+    var interval = 24 * 60 * 60 * 1000;
+
+    switch (day) {
+      case 'yesterday':
+        day = new Date( new Date().getTime() - interval).format();
+        break;
+      case 'today':
+        day = new Date().format();
+        break;
+      case 'tomorrow':
+        day = new Date( new Date().getTime() + interval).format();
+        break;
+    }
+
+
+    for (var k in output) {
+      if (k === day) {
+        output[k].forEach(function (e) {
+          if (e) {
+            console.log("-> ", e);
+          };
+        });
+      }
+    };
+  };
+
+  // Display information of every day
+  function displayCompleteList (output) {
+    for (var k in output) {
+      if (k === new Date().format()) {
+        console.log('------- Today -------');
+      } else {
+        if (k !== 'undefined') {
+          console.log('-------', k, '-------');
+        };
+      }
+
+      output[k].forEach(function (e) {
+        if (e) {
+          console.log("-> ", e);
+        };
+      });
+    };
+  }
+
+  // show menu options
+  function  showOptions () {
+    console.log(
+      "============== Task not found ====================\n",
+      "biju add 'task name' '2014-06-03'\n",
+      "biju remove 'task name'\n",
+      "biju list <yesterday | today | tomorrow>\n",
+      'biju clear'
+    )
+  }
+
+  function callMethod (method) {
+    if (Biju.hasOwnProperty(method)) {
+      Biju[method].call();
+    } else {
+      showOptions();
+    }
+  }
 
   delete Biju.init();
 })();
