@@ -91,6 +91,9 @@ require('./date.js');
     });
   }
 
+  Biju.help = function () {
+    showOptions();
+  }
 
   Biju.remove = function () {
     var
@@ -171,7 +174,7 @@ require('./date.js');
   // show menu options
   function  showOptions () {
     console.log(
-      "============== Task not found ====================\n",
+      "============== Biju Help ====================\n",
       "biju add 'task name' '2014-06-03'\n",
       "biju remove 'task name'\n",
       "biju list <yesterday | today | tomorrow>\n",
