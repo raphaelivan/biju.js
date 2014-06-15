@@ -175,7 +175,7 @@ require('./date.js');
   function  showOptions () {
     console.log(
       "============== Biju Help ====================\n",
-      "biju add 'task name' '2014-06-03'\n",
+      "biju add 'task name' <'2014-06-03'>\n",
       "biju remove 'task name'\n",
       "biju list <yesterday | today | tomorrow>\n",
       'biju clear'
