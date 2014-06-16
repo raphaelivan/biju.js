@@ -8,6 +8,10 @@ Set the environment variable BIJU_FILE with the absolute path to the file that w
 ```sh
   export BIJU_FILE=~/.biju
 ```
+## Install
+```sh
+  npm install biju -g
+```
 
 ## Usage
 Biju offers five actions: add, list, remove, clear and help.
