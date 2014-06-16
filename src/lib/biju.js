@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 require('./date.js');
 
 ;(function(){
@@ -190,5 +189,5 @@ require('./date.js');
     }
   }
 
-  delete Biju.init();
+  exports.init = Biju.init;
 })();

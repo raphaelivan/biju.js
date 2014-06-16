@@ -1,0 +1,25 @@
+{
+  "name": "biju",
+  "version": "0.0.1",
+  "description": "Control tasks from console",
+  "main": "biju.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/raphaelivan/biju.js.git"
+  },
+  "keywords": [
+    "tasks",
+    "todo",
+    "notes",
+    "calendar"
+  ],
+  "author": "Raphael Ivan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raphaelivan/biju.js/issues"
+  },
+  "homepage": "https://github.com/raphaelivan/biju.js"
+}
