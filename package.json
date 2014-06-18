@@ -3,34 +3,28 @@
   "version": "0.1.2",
   "description": "Control tasks from console",
   "main": "./lib/biju",
-
   "repository": {
     "type": "git",
     "url": "git://github.com/raphaelivan/biju.js.git"
   },
-
   "keywords": [
     "tasks",
     "todo",
     "notes",
     "calendar"
   ],
-
   "author": "Raphael Ivan",
   "license": "MIT",
-
   "bugs": {
     "url": "https://github.com/raphaelivan/biju.js/issues"
   },
-
   "homepage": "https://github.com/raphaelivan/biju.js",
-
   "bin": {
     "biju": "./bin/biju"
   },
-
-  "dependencies": {},
-
+  "dependencies": {
+    "colors": "^0.6.2"
+  },
   "engines": {
     "node": "*"
   }
