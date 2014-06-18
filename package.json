@@ -1,6 +1,6 @@
 {
   "name": "biju",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Control tasks from console",
   "main": "./lib/biju",
   "repository": {
