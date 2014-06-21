@@ -8,7 +8,8 @@ Set the environment variable BIJU_FILE with the absolute path to the file that w
 ```sh
   export BIJU_FILE=~/.biju
 ```
-## Install
+## Install [![NPM version](https://badge.fury.io/js/biju.svg)](http://badge.fury.io/js/biju)
+
 ```sh
   npm install biju -g
 ```
