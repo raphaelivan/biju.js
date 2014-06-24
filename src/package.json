@@ -23,7 +23,7 @@
     "biju": "./bin/biju"
   },
   "dependencies": {
-    "colors": "^0.6.2"
+    "pretty-log": "^0.1.0"
   },
   "engines": {
     "node": "*"

@@ -1,15 +1,12 @@
 require('./date.js');
-require('colors');
 
 ;(function(){
   'use strict'
 
-  var fs = require('fs');
-
-  /* create Biju Object */
-  var Biju = {
-    file: process.env.BIJU_FILE
-  };
+  var
+        fs = require('fs')
+      , log = require('pretty-log')
+      , Biju = { file: process.env.BIJU_FILE };
 
   /* Define the initializer method */
   Biju.init = function () {
@@ -18,7 +15,7 @@ require('colors');
       , method = args[0];
 
     if (!Biju.file) {
-      return console.log('You need to set BIJU_FILE environment variable. e.g (export BIJU_FILE="~/.biju.txt"'.red);
+      return log.error('You need to set BIJU_FILE environment variable. e.g (export BIJU_FILE="~/.biju.txt"');
     };
 
     callMethod(method);
@@ -34,10 +31,11 @@ require('colors');
 
     fs.appendFile(file, buffer, function (err) {
       if (err) {
-        throw 'error writing file:' + err;
+        log.error("Error writing file");
+        throw err;
       };
 
-      console.log('Note saved!'.green);
+      log.success('Note saved!');
     });
   };
 
@@ -79,13 +77,13 @@ require('colors');
     var
         file = Biju.file
       , stdin;
-    console.log('Are you sure?(y | n)'.red);
+    log.warn('Are you sure?(y | n)');
     stdin = process.openStdin();
     stdin.addListener('data', function(d) {
       var answer = d.toString().substring(0, d.length-1);
       if (answer == 'y') {
         fs.writeFile(file, '', 'utf-8', function (err) {});
-        console.log('Clean!'.green);
+        log.success('Clean!');
       }
       process.exit(0);
     });
