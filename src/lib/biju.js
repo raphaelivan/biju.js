@@ -25,17 +25,23 @@ require('./date.js');
     var
         args = process.argv.slice(2)
       , note = args[1]
-      , date = args[2] ? args[2] : new Date().format()
       , file = Biju.file
-      , buffer = new Buffer(note + ':' + date + ';')
+      , date = args[2]
+      , buffer;
+
+    if (args[2] && isNaN(Date.parse(args[2]))) {
+      date = new Date().format();
+      log.warn("Invalid date! Setting to current date.");
+    }
+
+    buffer = new Buffer(note + ':' + date + ';')
 
     fs.appendFile(file, buffer, function (err) {
       if (err) {
         log.error("Error writing file");
-        throw err;
       };
 
-      log.success('Note saved!');
+      log.success(note + ' was added to the list');
     });
   };
 
