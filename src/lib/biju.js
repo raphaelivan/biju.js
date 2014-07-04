@@ -1,7 +1,7 @@
 require('./date.js');
 
 ;(function(){
-  'use strict'
+  'use strict';
 
   var
         fs = require('fs')
@@ -16,10 +16,10 @@ require('./date.js');
 
     if (!Biju.file) {
       return log.error('You need to set BIJU_FILE environment variable. e.g (export BIJU_FILE="~/.biju.txt"');
-    };
+    }
 
     callMethod(method);
-  }
+  };
 
   Biju.add = function () {
     var
@@ -31,15 +31,15 @@ require('./date.js');
 
     if (args[2] && isNaN(Date.parse(args[2]))) {
       date = new Date().format();
-      log.warn("Invalid date! Setting to current date.");
+      log.warn('Invalid date! Setting to current date.');
     }
 
-    buffer = new Buffer(note + ':' + date + ';')
+    buffer = new Buffer(note + ':' + date + ';');
 
     fs.appendFile(file, buffer, function (err) {
       if (err) {
-        log.error("Error writing file");
-      };
+        log.error('Error writing file');
+      }
 
       log.success(note + ' was added to the list');
     });
@@ -87,17 +87,22 @@ require('./date.js');
     stdin = process.openStdin();
     stdin.addListener('data', function(d) {
       var answer = d.toString().substring(0, d.length-1);
-      if (answer == 'y') {
-        fs.writeFile(file, '', 'utf-8', function (err) {});
+      if (answer === 'y') {
+        fs.writeFile(file, '', 'utf-8', function (err) {
+          if (err) {
+            log.error('Can\'t clean the tasks!');
+          }
+        });
         log.success('Clean!');
       }
+
       process.exit(0);
     });
-  }
+  };
 
   Biju.help = function () {
     showOptions();
-  }
+  };
 
   Biju.remove = function () {
     var
@@ -112,16 +117,18 @@ require('./date.js');
         lines.forEach(function (e) {
           var
               split = e.split(':')
-            , date = split[1]
             , note = split[0]
-            , re = new RegExp(n,"i")
+            , re = new RegExp(n,'i')
             , output = '';
 
           if (note.match(re)) {
             output = data.replace(e + ';','');
-          };
+          }
 
           fs.writeFile(file, output, 'utf-8', function (err) {
+            if (err) {
+              log.error('Can\'t remove the task');
+            }
           });
         });
     });
@@ -146,47 +153,52 @@ require('./date.js');
 
 
     for (var k in output) {
-      if (k === day) {
-        output[k].forEach(function (e) {
-          if (e) {
-            var s = '-> ' + e;
-            console.log(s.green);
-          };
-        });
+      if (output.hasOwnProperty(k)) {
+        if (k === day) {
+          output[k].forEach(function (e) {
+            if (e) {
+              var s = '-> ' + e;
+              console.log(s.green);
+            }
+          });
+        }
       }
-    };
-  };
+    }
+  }
 
   // Display information of every day
   function displayCompleteList (output) {
     for (var k in output) {
-      if (k === new Date().format()) {
-        console.log('-------- Today --------'.blue);
-      } else {
-        if (k !== 'undefined') {
-          var s = '-------'+ k +'------';
-          console.log(s.blue);
-        };
-      }
 
-      output[k].forEach(function (e) {
-        if (e) {
-          var s = '-> ' + e;
-          console.log(s.green);
-        };
-      });
-    };
+      if (output.hasOwnProperty(k)) {
+        if (k === new Date().format()) {
+          console.log('-------- Today --------'.blue);
+        } else {
+          if (k !== 'undefined') {
+            var s = '-------'+ k +'------';
+            console.log(s.blue);
+          }
+        }
+
+        output[k].forEach(function (e) {
+          if (e) {
+            var s = '-> ' + e;
+            console.log(s.green);
+          }
+        });
+      }
+    }
   }
 
   // show menu options
   function  showOptions () {
     console.log(
-      "============== Biju Help ====================\n".blue,
-      "biju add 'task name' <'2014-06-03'>\n".blue,
-      "biju remove 'task name'\n".blue,
-      "biju list <yesterday | today | tomorrow>\n".blue,
+      '============== Biju Help ====================\n'.blue,
+      'biju add \'task name\' <\'2014-06-03\'>\n'.blue,
+      'biju remove \'task name\' \n'.blue,
+      'biju list <yesterday | today | tomorrow>\n'.blue,
       'biju clear'.blue
-    )
+    );
   }
 
   function callMethod (method) {

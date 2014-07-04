@@ -1,4 +1,5 @@
 Date.prototype.format = function () {
+  'use strict';
 
   var
       d = this.getDate()

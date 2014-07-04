@@ -13,7 +13,7 @@
     "notes",
     "calendar"
   ],
-  "author": "Raphael Ivan",
+  "author": "Raphael Ivan <contato@raphaelivan.com.br>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/raphaelivan/biju.js/issues"
@@ -27,5 +27,10 @@
   },
   "engines": {
     "node": "*"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-watch": "^0.6.1"
   }
 }
